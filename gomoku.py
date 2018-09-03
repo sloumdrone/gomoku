@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from gomoku_ai import Opponent
 
 class Gomoku:
     def __init__(self):
@@ -9,26 +9,35 @@ class Gomoku:
         self.pieces = [u' ◍ ',u' ○ ']
         self.turn_number = 0
         self.directions = [[1,0],[1,-1],[0,-1],[-1,-1]]
+        self.opponent = Opponent(self)
         self.game_loop()
 
     def game_loop(self):
         while 1:
             self.print_board()
 
-            try:
-                row = int(raw_input('Row? ')) - 1
-                col = int(raw_input('Column? ')) - 1
-            except ValueError:
-                print '\n\nInvalid input, entry must be a number\n'
-                continue
+            if self.turn == 1:
+                op_move = self.opponent.move()
+                row = op_move[0]
+                col = op_move[1]
+                print 'row? ' + str(row)
+                print 'col? ' + str(col)
+            else:
+                try:
+                    row = int(raw_input('Row? ')) - 1
+                    col = int(raw_input('Column? ')) - 1
+                except ValueError:
+                    print '\n\nInvalid input, entry must be a number\n'
+                    continue
 
-            if not self.validate_input(row,col):
-                print '\nInvalid move {0} {1}'.format(row+1,col+1)
-                continue
+                if not self.validate_input(row,col):
+                    print '\nInvalid move {0} {1}'.format(row+1,col+1)
+                    continue
 
             self.game_board[row][col] = self.pieces[self.turn]
 
             if self.check_win_state([row,col]):
+                self.print_board()
                 print u'PLAYER{0}WINS!'.format(self.pieces[self.turn])
                 break
             elif self.turn_number > 225:
