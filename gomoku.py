@@ -20,8 +20,8 @@ class Gomoku:
                 op_move = self.opponent.move()
                 row = op_move[0]
                 col = op_move[1]
-                print 'row? ' + str(row)
-                print 'col? ' + str(col)
+                print 'row? ' + str(row + 1)
+                print 'col? ' + str(col + 1)
             else:
                 try:
                     row = int(raw_input('Row? ')) - 1
@@ -38,10 +38,10 @@ class Gomoku:
 
             if self.check_win_state([row,col]):
                 self.print_board()
-                print u'PLAYER{0}WINS!'.format(self.pieces[self.turn])
+                print u'PLAYER{0}WINS!\n\n'.format(self.pieces[self.turn])
                 break
             elif self.turn_number > 225:
-                print 'There is no winner...'
+                print 'There is no winner...\n:(\n\n'
                 break
 
             self.turn = abs(self.turn - 1)
@@ -108,4 +108,14 @@ class Gomoku:
 
 
 if __name__ == "__main__":
+    print '''
+                                 _
+  __ _   ___   _ __ ___    ___  | | __ _   _
+ / _` | / _ \ | '_ ` _ \  / _ \ | |/ /| | | |
+| (_| || (_) || | | | | || (_) ||   < | |_| |
+ \__, | \___/ |_| |_| |_| \___/ |_|\_\ \__,_|
+ |___/
+    '''
+    print '\nObjective: Get five of your pieces in a row while \nstopping your opponent from doing the same.\n\nThis software is free and open source. \nDistribute and reuse as you wish.\nhttps://github.com/sloumdrone/gomoku\n'
+
     game = Gomoku()
