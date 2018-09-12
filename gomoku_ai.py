@@ -24,13 +24,22 @@ class Opponent:
     def score_consecutive_pieces(self,point,direction,round=1,piece=None):
         new_point = [point[0] + direction[0], point[1] + direction[1]]
         if new_point[0] < 0 or new_point[0] > 14 or new_point[1] < 0 or new_point[1] > 14 or self.game.game_board[ new_point[0]][ new_point[1]] == u' · ':
-            return 0
+            if round == 4 and piece == self.game.pieces[0]:
+                return 40
+            elif round == 5 and piece == self.game.pieces[1]:
+                return 200
+            else:
+                return 0
+
         if round == 1:
             piece = self.game.game_board[new_point[0]][new_point[1]]
-        elif round == 4:
-            return 100
+
+        if round == 4 and piece == self.game.pieces[0]:
+            return 8
+
         if piece != self.game.game_board[new_point[0]][new_point[1]]:
             return 0
+
         return round + self.score_consecutive_pieces(new_point,direction,round+1,piece)
 
     def choose_move(self,grid):
